@@ -144,7 +144,7 @@ def initialize_team(file_name):
     return team
 
 def initialize_and_simulate_game(team1_abbr, team2_abbr):
-    file_path = "C:\\Users\\herre\\OneDrive\\Documents\\PY - SPORTS\\BASEBALL\\BISMO_SIM\\FICT_MLB\\TEAMS"
+    file_path = # Replace with your file path 
 
     team1_filename = f'{file_path}\{team1_abbr}.csv'
     team2_filename = f'{file_path}\{team2_abbr}.csv'
