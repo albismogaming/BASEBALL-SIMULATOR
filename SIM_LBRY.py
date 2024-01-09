@@ -1,0 +1,4 @@
+### LOAD LEAGUE AVERAGES
+league_averages = {"SINGLE": 0.155, "DOUBLE": 0.047, "TRIPLE": 0.005, "HOMERUN": 0.028, "WALK": 0.091, "STRIKEOUT": 0.194, "OUT": 0.480}
+
+
