@@ -1,2 +1,2 @@
-# Football-Simulator
-Simulator that will simulate games, seasons, tournaments for football games.
+# Baseball-Simulator
+Simulator that will simulate games for baseball games.
