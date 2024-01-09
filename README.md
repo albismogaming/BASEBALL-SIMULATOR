@@ -1,7 +1,7 @@
 # Baseball-Simulator
 This is my first plate appearance at making any sort of project in python ;) 
 
-I chose the difficult take of creating a Baseball Simulator that will simulate an entire baseball game.
+I chose the difficult task of creating a Baseball Simulator that will simulate an entire baseball game.
 
 It is a fairly basic simulator, there isn't too much complexity like you would probably see from a game or an official simulator. 
 
