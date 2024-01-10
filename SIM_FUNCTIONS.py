@@ -16,7 +16,7 @@ def ordinal(n):
 ### WAIT TIME FUNCTIONS ####################################################################################################################################################
 def short_wait():
     # 1 SECOND
-    time.sleep(2)
+    time.sleep(2) 
 
 def long_wait():
     # 2 SECOND
@@ -32,6 +32,7 @@ def print_loading_dots(duration=1.5, interval=0.5):
         time.sleep(interval)
     print()  # Print a newline character to move to the next line
 
+# Use 0 for Wait time and Loading functions to simulate instantly
 
 ### STRIKE OUT CALLS #######################################################################################################################################################
 def strikeout_call():
