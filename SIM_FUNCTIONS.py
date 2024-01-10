@@ -66,26 +66,27 @@ def print_scoreboard(inning, top_or_bottom, score, outs, bases, team1_abbr, team
 ### SOUNDBOARD #############################################################################################################################################################
 pygame.mixer.init()
 
+# Create a folder for your sound effects and copy the file path below 
 def play_sound(event):
     sound_map = {
-        "WALK": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\catch_ball6.ogg",
-        "SINGLE": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\hit_normal1.ogg",
-        "DOUBLE": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\hit_normal6.ogg",
-        "TRIPLE": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\hit_hard3.ogg",
-        "SOLO HOMERUN!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\horn.ogg",
-        "TWO-RUN HOMERUN!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\horn.ogg",
-        "THREE-RUN HOMERUN!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\horn.ogg",
-        "GRAND SLAM!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\horn.ogg",
-        "GROUNDOUT": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\out2.ogg",
-        "LINEOUT": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\out2.ogg",
-        "FLYOUT": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\out2.ogg",
-        "STRUCK HIM OUT!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three1.ogg",
-        "HEE YAHH!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three2.ogg",
-        "STRIKE THREE!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three1.ogg",
-        "SUNG JOOKY BOUY!!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three2.ogg",
-        "HEE GONE!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three1.ogg",
-        "CYA LATER!": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three2.ogg",
-        "STRIKEOUT": "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\strike_three1.ogg"
+        "WALK": "FILE PATH",
+        "SINGLE": "FILE PATH",
+        "DOUBLE": "FILE PATH",
+        "TRIPLE": "FILE PATH",
+        "SOLO HOMERUN!": "FILE PATH",
+        "TWO-RUN HOMERUN!": "FILE PATH",
+        "THREE-RUN HOMERUN!": "FILE PATH",
+        "GRAND SLAM!": "FILE PATH",
+        "GROUNDOUT": "FILE PATH",
+        "LINEOUT": "FILE PATH",
+        "FLYOUT": "FILE PATH",
+        "STRUCK HIM OUT!": "FILE PATH",
+        "HEE YAHH!": "FILE PATH",
+        "STRIKE THREE!": "FILE PATH",
+        "SUNG JOOKY BOUY!!": "FILE PATH",
+        "HEE GONE!": "FILE PATH",
+        "CYA LATER!": "FILE PATH",
+        "STRIKEOUT": "FILE PATH"
     }
 
     sound_file = sound_map.get(event)
