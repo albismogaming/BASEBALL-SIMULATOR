@@ -1,4 +1,4 @@
-# Baseball-Simulator
+# BASEBALL SIMULATOR
 This is my first plate appearance at making any sort of project in python ;) 
 
 I chose the difficult task of creating a Baseball Simulator that will simulate an entire baseball game.
