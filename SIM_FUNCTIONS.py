@@ -1,109 +1,160 @@
-### STORING THE FUNCTIONS IN A SEPARATE FILE IN ORDER TO KEEP THE SIMULATION CODE CLEANER ##################################################################################
-import time
-import random
-import numpy as np
-import pandas as pd
-import math
-from termcolor import *
-import sys
-import pygame.mixer
-import re
+import os
+from SIM_FUNCTIONS import *
+from SIM_BOXSCORE import *
+from SIM_INN import *
+from SIM_AB import *
+from SIM_ROSTERS import *
+from SIM_LBRY import *
 
-### ORDINAL FOR INNINGS ####################################################################################################################################################
-def ordinal(n):
-    return "%d%s" % (n,"TSNRHTDD"[(n//10%10!=1)*(n%10<4)*n%10::4])
+def simulate_game(team1_csv, team2_csv):
+    #############################################################
+    team1_abbr = os.path.splitext(os.path.basename(team1_csv))[0]
+    team1 = load_away_roster(team1_csv)
+    team1_score_by_inning = []
+    team1_hits_inning = []
+    team1_pitches_by_inning = []
+    team1_pitcher = team1[next(iter(team1))]
+    team1_batting_order = list(team1.values())[1:10]
+    #############################################################
+    team2_abbr = os.path.splitext(os.path.basename(team2_csv))[0]
+    team2 = load_home_roster(team2_csv)
+    team2_score_by_inning = []
+    team2_hits_inning = []
+    team2_pitches_by_inning = []
+    team2_pitcher = team2[next(iter(team2))]
+    team2_batting_order = list(team2.values())[1:10]
+    #############################################################
+    inning = 1
+    top_or_bottom = "TOP"
+    current_score = [0, 0]
 
-### WAIT TIME FUNCTIONS ####################################################################################################################################################
-def short_wait():
-    # 1 SECOND
-    time.sleep(2) 
+    #play_intro()
+    long_wait()
+    print("WELCOME TO BASEBALL'S FINEST!")
+    print(f"TODAYS MATCHUP IS BETWEEN {team1_abbr} -VS- {team2_abbr}!")
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    long_wait()
+    print()
+    display_away_roster(team1)
+    long_wait()
+    print()
+    display_home_roster(team2)
+    long_wait()
+    print()
 
-def long_wait():
-    # 2 SECOND
-    time.sleep(3)
+    print("XXXXXXXXXXXXX")
+    print("PLAY BALL!")
+    print("XXXXXXXXXXXXX")
+    long_wait()
+    print()
 
-### LOADING FUNCTION #######################################################################################################################################################
-def print_loading_dots(duration=1.5, interval=0.5):
-    end_time = time.time() + duration
-    sys.stdout.write("LOADING")
-    while time.time() < end_time:
-        sys.stdout.write(".")
-        sys.stdout.flush()  # Make sure the dot is immediately printed to the terminal
-        time.sleep(interval)
-    print()  # Print a newline character to move to the next line
-
-# Use 0 for Wait time and Loading functions to simulate instantly
-
-### STRIKE OUT CALLS #######################################################################################################################################################
-def strikeout_call():
-    descriptions = [
-        "STRUCK HIM OUT!",
-        "HEE YAHH!",
-        "STRIKE THREE!",
-        "SUNG JOOKY BOUY!!",
-        "HEE GONE!",
-        "CYA LATER!"
-    ]
-    return random.choice(descriptions)
-
-### SCOREBOARD #############################################################################################################################################################
-def print_scoreboard(inning, top_or_bottom, score, outs, bases, team1_abbr, team2_abbr):
-    inning_indicator = "TOP" if top_or_bottom == "TOP" else "BOT"
-    base_status = [
-        "X" if bases[base] else "-" for base in ['1ST', '2ND', '3RD']
-    ]
-    scoreboard = f"""
-{colored(f'====================', 'white', attrs=['bold'])}
-{colored(f'|', 'white', attrs=['bold'])} {colored(inning_indicator, 'red', attrs=['bold'])} {colored(ordinal(inning), 'red', attrs=['bold'])} {colored(f'|', 'white', attrs=['bold'])} {colored((outs), 'yellow', attrs=['bold'])} OUTS {colored(f'|', 'white', attrs=['bold'])}
-{colored(f'====================', 'white', attrs=['bold'])}
-{colored(f'|', 'white', attrs=['bold'])} {colored(team1_abbr, 'white', attrs=['bold'])}: {colored(f'{score[0]:2}', 'yellow', attrs=['bold'])} {colored(f'|', 'white', attrs=['bold'])}   {colored(f'[', 'red', 'on_white', attrs=['bold'])}{colored(base_status[1], 'red', 'on_white', attrs=['bold'])}{colored(f']', 'red', 'on_white', attrs=['bold'])}  {colored(f'|', 'white', attrs=['bold'])}
-{colored(f'|', 'white', attrs=['bold'])} {colored(team2_abbr, 'white', attrs=['bold'])}: {colored(f'{score[1]:2}', 'yellow', attrs=['bold'])} {colored(f'|', 'white', attrs=['bold'])} {colored(f'[', 'red', 'on_white', attrs=['bold'])}{colored(base_status[2], 'red', 'on_white', attrs=['bold'])}{colored(f']', 'red', 'on_white', attrs=['bold'])} {colored(f'[', 'red', 'on_white', attrs=['bold'])}{colored(base_status[0], 'red', 'on_white', attrs=['bold'])}{colored(f']', 'red', 'on_white', attrs=['bold'])}{colored(f'|', 'white', attrs=['bold'])}
-{colored(f'====================', 'white', attrs=['bold'])}
-    """
-    print(scoreboard)
-    short_wait()
-
-
-### SOUNDBOARD #############################################################################################################################################################
-pygame.mixer.init()
-
-# Create a folder for your sound effects and copy the file path below 
-def play_sound(event):
-    sound_map = {
-        "WALK": "FILE PATH",
-        "SINGLE": "FILE PATH",
-        "DOUBLE": "FILE PATH",
-        "TRIPLE": "FILE PATH",
-        "SOLO HOMERUN!": "FILE PATH",
-        "TWO-RUN HOMERUN!": "FILE PATH",
-        "THREE-RUN HOMERUN!": "FILE PATH",
-        "GRAND SLAM!": "FILE PATH",
-        "GROUNDOUT": "FILE PATH",
-        "LINEOUT": "FILE PATH",
-        "FLYOUT": "FILE PATH",
-        "STRUCK HIM OUT!": "FILE PATH",
-        "HEE YAHH!": "FILE PATH",
-        "STRIKE THREE!": "FILE PATH",
-        "SUNG JOOKY BOUY!!": "FILE PATH",
-        "HEE GONE!": "FILE PATH",
-        "CYA LATER!": "FILE PATH",
-        "STRIKEOUT": "FILE PATH"
-    }
-
-    sound_file = sound_map.get(event)
-    if sound_file:
-        pygame.mixer.music.load(sound_file)
-        pygame.mixer.music.play()
-    else:
+    while True:  # Continue indefinitely, we'll break out of the loop when the game ends
+        short_wait()
+        message = f'| START OF THE {ordinal(inning):2} INN |'
+        print(colored('=' * len(message), 'white', attrs=['bold']))
+        print(colored(message, 'yellow', attrs=['bold']))
+        print(colored('=' * len(message), 'white', attrs=['bold']))
         print()
+        short_wait()
+        
+        # Simulate the top half of the inning
+        top_or_bottom = "TOP"
+        current_score, hits_top, total_pitches_top = simulate_half_inning(team1_batting_order, team1_pitcher, team1_abbr, team2_abbr, current_score, inning, top_or_bottom)
 
-def play_intro():
-    pygame.mixer.init()
-    pygame.mixer.music.load('C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\SOUNDS\\MLB_FOX_INTRO.mp3')
-    pygame.mixer.music.play()
+        # Update the score for team1
+        team1_score_by_inning.append(current_score[0] - sum(team1_score_by_inning))
+        team1_hits_inning.append(hits_top)
+        team1_pitches_by_inning.append(total_pitches_top)
 
+        # Check for walk-off condition in the bottom of the 9th or later
+        if inning >= 9 and sum(team2_score_by_inning) > sum(team1_score_by_inning):
+            break  # Home team wins in bottom of the inning (9th or later)
+        
+        short_wait()
+        message = f'| MID OF THE {ordinal(inning):2} INN |'
+        print(colored('=' * len(message), 'white', attrs=['bold']))
+        print(colored(message, 'yellow', attrs=['bold']))
+        print(colored('=' * len(message), 'white', attrs=['bold']))
+        print()
+        short_wait()
 
+        # Simulate the bottom half of the inning
+        top_or_bottom = "BOT"
+        current_score, hits_bot, total_pitches_bot = simulate_half_inning(team2_batting_order, team2_pitcher, team1_abbr, team2_abbr, current_score, inning, top_or_bottom)
 
+        # Update the score for team2
+        team2_score_by_inning.append(current_score[1] - sum(team2_score_by_inning))
+        team2_hits_inning.append(hits_bot)
+        team2_pitches_by_inning.append(total_pitches_bot)
+        short_wait()
 
+        # Check for walk-off condition in the bottom of the 9th or later
+        if inning >= 9 and sum(team2_score_by_inning) > sum(team1_score_by_inning):
+            print()
+            print(f"{team2_abbr} WALKS IT OFF FOR THE WIN!!!")
+            print()
+            short_wait()
+            break  # Home team wins in bottom of the inning (9th or later)
 
+        short_wait()
+        message = f'| END OF THE {ordinal(inning):2} INN | {team1_abbr}: {sum(team1_score_by_inning)} - {team2_abbr}: {sum(team2_score_by_inning)} |'
+        print(colored('=' * len(message), 'white', attrs=['bold']))
+        print(colored(message, 'yellow', attrs=['bold']))
+        print(colored('=' * len(message), 'white', attrs=['bold']))
+        print()
+        short_wait()
 
+        # Check for game-ending conditions
+        if inning >= 9 and sum(team1_score_by_inning) != sum(team2_score_by_inning):
+            break  # Game is decided in 9 innings, no need for extra innings
+
+        inning += 1  # Proceed to the next inning
+
+    # Ensure score lists have same length
+    while len(team1_score_by_inning) > len(team2_score_by_inning):
+        team2_score_by_inning.append(0)
+    while len(team1_score_by_inning) < len(team2_score_by_inning):
+        team1_score_by_inning.append(0)
+    
+    team1_pitches = sum(team1_pitches_by_inning)
+    team2_pitches = sum(team2_pitches_by_inning)
+
+    team1_hits = sum(team1_hits_inning)
+    team2_hits = sum(team2_hits_inning)
+
+    
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    print(f"| FINAL: | {colored(team1_abbr, 'white', attrs=['bold'])}: {colored(current_score[0], 'yellow', attrs=['bold'])} | {colored(team2_abbr, 'white', attrs=['bold'])}: {colored(current_score[1], 'yellow', attrs=['bold'])} |")
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    print()
+    short_wait()
+    print()
+    print("======= BOXSCORE =======")
+    print_boxscore([team1_score_by_inning, team2_score_by_inning], team1_hits, team2_hits, team1_pitches, team2_pitches, team1_abbr, team2_abbr)  # Also print the pitches
+
+    return current_score
+
+def initialize_team(file_name):
+    team = load_roster(file_name)
+    team_pitcher = team[next(iter(team))]
+        
+    for batter in list(team.values())[1:]:
+        update_batter_probabilities(batter, team_pitcher, league_averages)
+
+    return team
+
+def initialize_and_simulate_game(team1_abbr, team2_abbr):
+    file_path = 'C:\\Users\\alexj\\Desktop\\   \\BASEBALL_SIM\\TEAMS\\'
+
+    team1_filename = f'{file_path}\\{team1_abbr}\\{team1_abbr}.csv'
+    team2_filename = f'{file_path}\\{team2_abbr}\\{team2_abbr}.csv'
+    simulate_game(team1_filename, team2_filename)
+
+def main():
+    # Initialize and simulate game between two teams
+    AWAY = input("AWAY TEAM: ")
+    HOME = input("HOME TEAM: ")
+    initialize_and_simulate_game(AWAY, HOME)
+
+if __name__ == "__main__":
+    main()
