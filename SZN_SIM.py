@@ -1,7 +1,7 @@
 import csv
 from SIM_GAMEDAY import *
 
-file_path = 'C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\FICT_MLB\\ABL_SKED\\ABL_SKED.csv'
+file_path = filepath
 
 def read_schedule(file_path):
     schedule = []
@@ -14,7 +14,7 @@ def read_schedule(file_path):
     return schedule
 
 def initialize_and_simulate_game(team1_abbr, team2_abbr):
-    file_path = "C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\FICT_MLB\\TEAMS\\"
+    file_path = filepath
     
     team1_filename = f'{file_path}\{team1_abbr}.csv'
     team2_filename = f'{file_path}\{team2_abbr}.csv'
@@ -42,7 +42,7 @@ def simulate_season(file_path):
             writer.writerow([game_number, team1_abbr, score1, team2_abbr, score2])
 
 def main():
-    file_path = 'C:\\Users\\herre\\OneDrive\\Documents\\SPORTS\\MLB\\BISMO_BALL\\FICT_MLB\\ABL_SKED\\ABL_SKED.csv'
+    file_path = filepath
     simulate_season(file_path)
     # Optionally, include code to summarize the season results
 
